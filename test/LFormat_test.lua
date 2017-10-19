@@ -4,7 +4,7 @@ for i=1,10 do
 end
 for i,v in ipairs( table_name ) do
 print( i, v )
-end
+                    end
 for i,v in pairs( table_name ) do
 print( i, v )
 end
@@ -69,7 +69,7 @@ end
 
 --table
 tbl= {}
-tbl = {x= 1, y=2}
+tbl =    {x= 1, y=2}
 tbl = {
 x =1,
 y=2

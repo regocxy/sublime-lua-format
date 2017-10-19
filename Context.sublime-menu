@@ -1,5 +1,5 @@
 [
-	{"caption": "-"},
+    {"caption": "-"},
     {
         "caption": "Format",
         "command": "l_format"
