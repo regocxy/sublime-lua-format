@@ -67,15 +67,22 @@ end
 --operation keys
 --[[operation]]c=1+2-3*4/5%6
 
+--table
+tbl= {}
+tbl = {x= 1, y=2}
+tbl = {
+x =1,
+y=2
+}
+
 --other
     repeat
     print('hello')
-until a==b
+until   a==b
 
 print(function () return 'hello'end,'world')
 require ('hello')
 require'hello'
-
 
 
 

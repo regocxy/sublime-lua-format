@@ -175,7 +175,7 @@ class Formater(object):
             if node.type == Node.TYPE_UNINDENT:
                 if indent >= self.tab_size:
                     indent -= self.tab_size
-                tbl = [' ', ' '*indent, Formater.CHAR_ENTER]
+                tbl = [' ', ' '*indent, Formater.CHAR_ENTER, '{']
                 if node.parent and node.parent.name not in tbl:
                     node.front(Node(' ', Node.TYPE_WORD))
                 tbl = [',', ')', Formater.CHAR_ENTER]
@@ -195,7 +195,7 @@ class Formater(object):
                 (node.name == 'do' and (node.parent and node.parent.name == Formater.CHAR_ENTER or node.parent.name == ' '*indent)):
                 indent += self.tab_size
                 if node.child and node.child.name != Formater.CHAR_ENTER and node.child.name != ' ':
-                    if not (node.name == 'function' and node.child.name == '('):
+                    if not ((node.name == 'function' and node.child.name == '(') or node.child.name == '}'):
                         node.behind(Node(' ', Node.TYPE_WORD))
             elif node.name == ',':
                 tbl = [' ', Formater.CHAR_ENTER]
