@@ -51,7 +51,7 @@ if true then
 print('hello')
     end
 
-if (a>b) and (a==b) then
+if (a>b) and(a==b) then
     
 end
 
@@ -64,10 +64,17 @@ for i = 1, 10        do
 end
 end
 end
-
 --operation keys
 --[[operation]]c=1+2-3*4/5%6
 
+--other
+    repeat
+    print('hello')
+until a==b
+
+print(function () return 'hello'end,'world')
+require ('hello')
+require'hello'
 
 
 

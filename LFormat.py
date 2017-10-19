@@ -69,7 +69,7 @@ class Formater(object):
     Indents = ['if', 'for', 'repeat', 'while', 'function', '{']
     Unindents = ['end', 'until', '}']
     Unindents2 = ['else', 'elseif']
-    Others = ['print', 'in','pairs','ipairs','then', 'do', 'require', 'local', 'return', 'and', 'or', 'not']
+    Others = ['print', 'in', 'pairs', 'ipairs', 'then', 'do', 'require', 'local', 'return', 'and', 'or', 'not']
 
     def __init__(self):
         self.link = Link()
@@ -177,7 +177,11 @@ class Formater(object):
                     indent -= self.tab_size
                 tbl = [' ', ' '*indent, Formater.CHAR_ENTER]
                 if node.parent and node.parent.name not in tbl:
-                   node.front(Node(' ', Node.TYPE_WORD))
+                    node.front(Node(' ', Node.TYPE_WORD))
+                tbl = [',', ')', Formater.CHAR_ENTER]
+                if node.child and node.child.name not in tbl:
+                    node.behind(Node(' ', Node.TYPE_WORD))
+
             if not node.parent or node.parent.name == Formater.CHAR_ENTER:
                 if indent:
                     if node.type == Node.TYPE_UNINDENT2:
@@ -191,7 +195,8 @@ class Formater(object):
                 (node.name == 'do' and (node.parent and node.parent.name == Formater.CHAR_ENTER or node.parent.name == ' '*indent)):
                 indent += self.tab_size
                 if node.child and node.child.name != Formater.CHAR_ENTER and node.child.name != ' ':
-                    node.behind(Node(' ', Node.TYPE_WORD))
+                    if not (node.name == 'function' and node.child.name == '('):
+                        node.behind(Node(' ', Node.TYPE_WORD))
             elif node.name == ',':
                 tbl = [' ', Formater.CHAR_ENTER]
                 if node.child and node.child.name not in tbl :
@@ -216,7 +221,8 @@ class Formater(object):
                 if node.parent and node.parent.name not in tbl:
                     node.front(Node(' ', Node.TYPE_WORD))
                 if node.child and node.child.name not in tbl:
-                    if node.child.name != '(':
+                    tbl = ['print', 'require', 'pairs', 'ipairs']
+                    if not (node.name in tbl and node.child.name == '('):
                         node.behind(Node(' ', Node.TYPE_WORD))
 
             node = node.child
