@@ -1,4 +1,4 @@
---for
+--for test
 for i=1,10 do
               print(i)
 end
@@ -9,12 +9,12 @@ for i,v in pairs( table_name ) do
 print( i, v )
 end
 
---single commit
+--single commit test
 --[[
-    multi commit
+    multi commit test
 ]]
 
---function
+--function test
 local function function_name(a,b,...)--commit test
 -- body
     print('local function test')         ----[[commit test]]
@@ -37,7 +37,7 @@ str=[[
     hello world
 ]]
 
---condition keys
+--condition keys test
 if a>=b then    end
 if a<=b then    end
 if a==b then       end
@@ -55,7 +55,7 @@ if (a>b) and(a==b) then
     
 end
 
---indent
+--indent test
 for i=1,10 do
 if true then
 print(i)
@@ -64,10 +64,29 @@ for i = 1, 10        do
 end
 end
 end
---operation keys
+
+foo():foo():foo()
+:foo()
+:foo()
+
+print('hello', 'world',
+'hello',
+'world',
+'hello')
+
+print('hello',function( )
+    --todo
+return 'anonymity fuction'
+end, 'world',foo())
+
+function foo( ... )
+if true then 
+    end   end
+
+--operation keys test
 --[[operation]]c=1+2-3*4/5%6
 
---table
+--table test
 tbl= {}
 tbl =    {x= 1  , y=2}
 tbl = {
@@ -75,7 +94,7 @@ x =-1,
 y=2
 }
 
---other
+--other test
     repeat
     print('hello')
 until   a==b
@@ -83,15 +102,3 @@ until   a==b
 print(function () return 'hello'end,'world')
             require      ('hello')
 require  "hello"
-
-foo():foo()
-:foo()
-:foo
-
-
-
-
-
-
-
-

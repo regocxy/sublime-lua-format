@@ -66,8 +66,8 @@ class Formater(object):
     Seps = ['~', '>', '<', '=', '+', '-', '*', '/', '%', ':', ',', ' ', '\t', CHAR_ENTER, '\'', '"', '{', '}', '(', ')', '[', ']']
     Conds = ['~', '>', '<', '=']
     Ops = ['+', '-', '*', '/', '%']
-    Indents = ['if', 'for', 'repeat', 'while', 'function', '{']
-    Unindents = ['end', 'until', '}']
+    Indents = ['if', 'for', 'repeat', 'while', 'function', '{', '(']
+    Unindents = ['end', 'until', '}', ')']
     Unindents2 = ['else', 'elseif']
     Others = ['print', 'in', 'pairs', 'ipairs', 'then', 'do', 'require', 'local', 'return', 'and', 'or', 'not']
 
@@ -173,14 +173,24 @@ class Formater(object):
         node = self.link2.head
         while node:
             if node.type == Node.TYPE_UNINDENT:
-                if indent >= self.tab_size:
-                    indent -= self.tab_size
-                tbl = [' ', ' '*indent, Formater.CHAR_ENTER, '{']
-                if node.parent and node.parent.name not in tbl:
-                    node.front(Node(' ', Node.TYPE_WORD))
-                tbl = [',', ')', Formater.CHAR_ENTER]
-                if node.child and node.child.name not in tbl:
-                    node.behind(Node(' ', Node.TYPE_WORD))
+                should_indent = True
+                if node.name == ')':
+                    parent = node.parent
+                    while parent and parent.name != Formater.CHAR_ENTER and parent.name != node.name:
+                        if parent.type ==  Node.TYPE_UNINDENT:
+                            should_indent = False
+                            break
+                        parent = parent.parent
+                else:
+                    tbl = [' ', ' '*indent, Formater.CHAR_ENTER, '{']
+                    if node.parent and node.parent.name not in tbl:
+                        node.front(Node(' ', Node.TYPE_WORD))
+                    tbl = [',', ')', Formater.CHAR_ENTER]
+                    if node.child and node.child.name not in tbl:
+                        node.behind(Node(' ', Node.TYPE_WORD))
+                if should_indent:
+                    if indent >= self.tab_size:
+                        indent -= self.tab_size
 
             if not node.parent or node.parent.name == Formater.CHAR_ENTER:
                 if indent:
@@ -193,10 +203,20 @@ class Formater(object):
                         node.front(Node(' '*indent, Node.TYPE_WORD))
             if node.type == Node.TYPE_INDENT or \
                 (node.name == 'do' and (node.parent and node.parent.name == Formater.CHAR_ENTER or node.parent.name == ' '*indent)):
-                indent += self.tab_size
-                if node.child and node.child.name != Formater.CHAR_ENTER and node.child.name != ' ':
-                    if not ((node.name == 'function' and node.child.name == '(') or node.child.name == '}'):
-                        node.behind(Node(' ', Node.TYPE_WORD))
+                should_indent = True
+                if node.name == '(':
+                    child = node.child
+                    while child and child.name != Formater.CHAR_ENTER and child.name != node.name:
+                        if child.type == Node.TYPE_INDENT:
+                            should_indent = False
+                            break
+                        child = child.child
+                else:
+                    if node.child and node.child.name != Formater.CHAR_ENTER and node.child.name != ' ':
+                        if not ((node.name == 'function' and node.child.name == '(') or node.child.name == '}'):
+                            node.behind(Node(' ', Node.TYPE_WORD))
+                if should_indent:
+                    indent += self.tab_size
             elif node.name == ',':
                 tbl = [' ', Formater.CHAR_ENTER]
                 if node.child and node.child.name not in tbl :
