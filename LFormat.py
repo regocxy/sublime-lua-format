@@ -201,6 +201,10 @@ class Formater(object):
                 tbl = [' ', Formater.CHAR_ENTER]
                 if node.child and node.child.name not in tbl :
                     node.behind(Node(' ', Node.TYPE_WORD))
+            elif node.name == ':':
+                tbl = [' '*indent, Formater.CHAR_ENTER]
+                if node.parent and node.parent.name in tbl:
+                    node.front(Node(' '*self.tab_size, Node.TYPE_WORD))
             elif node.type == Node.TYPE_COND:
                 if node.parent and node.parent.type != Node.TYPE_COND and node.parent.name != ' ':
                     node.front(Node(' ', Node.TYPE_WORD))
