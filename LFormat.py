@@ -213,8 +213,7 @@ class Formater(object):
             elif node.type == Node.TYPE_OPER:
                 if node.parent and node.parent.name != ' ':
                     node.front(Node(' ', Node.TYPE_WORD))
-                if node.child and node.child.name != ' ':
-                    if not (node.name == '-' and node.child.name.isdigit()):
+                    if node.child and node.child.name != ' ': 
                         node.behind(Node(' ', Node.TYPE_WORD))
             elif node.type == Node.TYPE_COMMIT:
                 tbl = [Formater.CHAR_ENTER, ' ', ' '*indent]
