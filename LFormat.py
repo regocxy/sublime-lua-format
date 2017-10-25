@@ -176,7 +176,7 @@ class Formater(object):
                 should_indent = True
                 if node.name == ')':
                     parent = node.parent
-                    while parent and parent.name != Formater.CHAR_ENTER and parent.name != node.name:
+                    while parent and parent.name != Formater.CHAR_ENTER and parent.name != '(':
                         if parent.type ==  Node.TYPE_UNINDENT:
                             should_indent = False
                             break
@@ -206,7 +206,7 @@ class Formater(object):
                 should_indent = True
                 if node.name == '(':
                     child = node.child
-                    while child and child.name != Formater.CHAR_ENTER:
+                    while child and child.name != Formater.CHAR_ENTER and child.name != ')':
                         if child.type == Node.TYPE_INDENT:
                             should_indent = False
                             break

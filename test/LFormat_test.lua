@@ -74,7 +74,7 @@ print('hello', 'world',
 'world',
 'hello')
 
-print('hello',function( )
+print('hello',function( abc )
     --todo
 return 'anonymity fuction'
 end, 'world',foo())
@@ -104,10 +104,11 @@ print(function () return 'hello'end,'world')
             require      ('hello')
 require  "hello"
 
-
+if true then
+-- display.newSprite(display.getImage('hero_attack_00_01.png'))
         self:runAction(cc.Sequence:create(cc.DelayTime:create(0.5), cc.CallFunc:create(function()
             self._isAttack = false
         end)))
-
+end
 
 
