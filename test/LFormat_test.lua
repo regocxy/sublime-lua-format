@@ -81,7 +81,8 @@ end, 'world',foo())
 
 function foo( ... )
 if true then 
-    end   end
+    end   
+    end
 
 --operation keys test
 --[[operation]]c=1+2-3*4/5%6
@@ -102,3 +103,11 @@ until   a==b
 print(function () return 'hello'end,'world')
             require      ('hello')
 require  "hello"
+
+
+        self:runAction(cc.Sequence:create(cc.DelayTime:create(0.5), cc.CallFunc:create(function()
+            self._isAttack = false
+        end)))
+
+
+

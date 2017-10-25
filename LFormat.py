@@ -206,11 +206,16 @@ class Formater(object):
                 should_indent = True
                 if node.name == '(':
                     child = node.child
-                    while child and child.name != Formater.CHAR_ENTER and child.name != node.name:
+                    while child and child.name != Formater.CHAR_ENTER:
                         if child.type == Node.TYPE_INDENT:
                             should_indent = False
                             break
                         child = child.child
+                    # while child and child.name != Formater.CHAR_ENTER and child.name != node.name:
+                    #     if child.type == Node.TYPE_INDENT:
+                    #         should_indent = False
+                    #         break
+                    #     child = child.child
                 else:
                     if node.child and node.child.name != Formater.CHAR_ENTER and node.child.name != ' ':
                         if not ((node.name == 'function' and node.child.name == '(') or node.child.name == '}'):
@@ -231,7 +236,8 @@ class Formater(object):
                 if node.child and node.child.type != Node.TYPE_COND and node.child.name != ' ':
                     node.behind(Node(' ', Node.TYPE_WORD))
             elif node.type == Node.TYPE_OPER:
-                if node.parent and node.parent.name != ' ':
+                tbl = [' ', '(']
+                if node.parent and node.parent.name not in tbl:
                     node.front(Node(' ', Node.TYPE_WORD))
                     if node.child and node.child.name != ' ': 
                         node.behind(Node(' ', Node.TYPE_WORD))
