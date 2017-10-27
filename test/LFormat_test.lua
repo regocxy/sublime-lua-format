@@ -110,5 +110,15 @@ if true then
             self._isAttack = false
         end)))
 end
+(
+    helo
+    )
+    {       {
+    hello
+}}
+
+    {(function test( ... )
+        -- body
+    end)}
 
 
