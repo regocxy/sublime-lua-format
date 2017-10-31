@@ -249,7 +249,7 @@ class Formater(object):
                 if node.parent and node.parent.name not in tbl:
                     node.front(Node(' ', Node.TYPE_WORD))
             elif node.type == Node.TYPE_OTHER:
-                tbl = [Formater.CHAR_ENTER, ' ', ' '*indent]
+                tbl = [Formater.CHAR_ENTER, ' ', ' '*indent, '(']
                 if node.parent and node.parent.name not in tbl:
                     node.front(Node(' ', Node.TYPE_WORD))
                 if node.child and node.child.name not in tbl:
